@@ -211,24 +211,36 @@ void turnOn(uint8_t RING_START, double& sigma, double& maximum, double sigmaRedu
 // Bandpass filter stuff from Boldevin (Link at the top)
 void calc4000() {
   for (uint8_t i = 0; i < sampleSize / 2; i++) {
-    sigma4000 += sq(abs(samples[2 * i] - samples[2 * i + 1]));
+    sigma4000 += sq(abs(
+      samples[2 * i] - 
+      samples[2 * i + 1]));
   }
 }
 
 void calc2000() {
   for (uint8_t i = 0; i < sampleSize / 4; i++) {
-    sigma2000 += sq(abs(samples[4 * i] + samples[4 * i + 1] - samples[4 * i + 2] + samples[4 * i + 3]));
+    sigma2000 += sq(abs(
+      samples[4 * i] -
+      samples[4 * i + 1] +
+      samples[4 * i + 2] -
+      samples[4 * i + 3]));
   }
 }
 
 void calc400() {
-  uint8_t sum400Vec[6] = { 0, 0, 0, 0, 0, 0 };
   for (uint8_t i = 0; i < sampleSize / 10; i++) {
-    for (uint8_t j = 0; j < 10; j++) {
-      sum400Vec[i] += samples[i * 10 + j];
-    }
+    sigma400 += sq(abs(
+      samples[10 * i] -
+      samples[10 * i + 1] +
+      samples[10 * i + 2] -
+      samples[10 * i + 3] +
+      samples[10 * i + 4] -
+      samples[10 * i + 5] +
+      samples[10 * i + 6] -
+      samples[10 * i + 7] +
+      samples[10 * i + 8] -
+      samples[10 * i + 9]));
   }
-  sigma400 = sq(abs((sum400Vec[0] - sum400Vec[1]) + (sum400Vec[2] - sum400Vec[3]) + (sum400Vec[4] - sum400Vec[5])));
 }
 
 void setup() {
