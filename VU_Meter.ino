@@ -217,7 +217,7 @@ void calc4000() {
 
 void calc2000() {
   for (uint8_t i = 0; i < sampleSize / 4; i++) {
-    sigma2000 += sq(abs(samples[2 * i] + samples[2 * i + 1] - samples[2 * 2] + samples[2 * i + 3]));
+    sigma2000 += sq(abs(samples[4 * i] + samples[4 * i + 1] - samples[4 * i + 2] + samples[4 * i + 3]));
   }
 }
 
